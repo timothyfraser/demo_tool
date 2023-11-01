@@ -12,7 +12,9 @@ Your R package will need the following documents.
 - `DESCRIPTION`: the package metadata file, including eg. the package name, description, maintainers, etc. Always work from a template, because it can be persnickety.
 - `NAMESPACE`: a list of all functions for exporting. You don't edit this yourself; `devtools::document()` does it for you.
 - `/R` code folder, with scripts whose names should match your functions, 1 function per script, usually.
-- `/man`: manual folder, with manuals summarizing your functions. You don't make this yourself; `devtools::document()` does it for you. Automatically generated from your `roxygen` comments for your functions.    
+- `/man`: manual folder, with manuals summarizing your functions. You don't make this yourself; `devtools::document()` does it for you. Automatically generated from your `roxygen` comments for your functions.
+- `/data`: data folder, with `.rda` files for any objects your package relies on to run functions, eg. `data.frames`, `vectors`, etc. Name of `.rda` file should match name of object when loaded.
+- `/z`: extra folder, for any other scripts or files you may need. I put my `dev.R` script here, as well as raw data.
 
 ## `devtools`
 
