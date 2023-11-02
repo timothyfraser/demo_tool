@@ -32,9 +32,19 @@ demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
 # When finished, remember to unload the package
 unloadNamespace(mypackage); remove.packages(mypackage)
 
-# Always a good idea to clear your environment and cache
-rm(list = ls()); gc()
-
 # Then, when ready, build and install the package!
 # For speedy build, use binary = FALSE and vignettes = FALSE
 devtools::build(".", binary = FALSE, vignettes = FALSE)
+
+# Install your package from a local build file
+install.packages("nameofyourpackagefile.tar.gz", type = "source")
+
+# Load your package!
+library("demo_tool")
+
+
+# When finished, remember to unload the package
+unloadNamespace(mypackage); remove.packages(mypackage)
+
+# Always a good idea to clear your environment and cache
+rm(list = ls()); gc()
