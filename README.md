@@ -189,7 +189,7 @@ get_prob = function(t = 100, lambdas, type = "series"){
 }
 ```
 
-## 1.5 Adding data to the package (optional)
+### 1.5 Adding data to the package (optional)
 
 If you need to add data to your package, you can put a `z/make_data.R` script in your `/z` folder (which is ignored when building the package, according to the `.buildignore` file). You would run this, saving your data as a `.rda` file in the `/data` folder. It might look like my `z/make_data.R` template below.
 
@@ -207,7 +207,7 @@ helper = tibble(x = 1, y = 2, z = 3)
 save(helper, "data/helper.rda")
 ```
 
-## `devtools`
+## 2. `devtools`
 
 Once you have your prerequisite files, you can build your R package!
 To build an R package, you will need to install `devtools`, the package for R package development!
@@ -221,7 +221,7 @@ I encourage you create 2 helper files in the `/z` folder for this purpose, and a
 
 Here's examples of each.
 
-### `z/workflow.R`: 
+### 2.1 `z/workflow.R`: 
 
 ```r
 #' @name workflow.R
@@ -253,7 +253,7 @@ rm(list = ls()); gc()
 ```
 
 
-### `z/dev.R`: 
+### 2.2 `z/dev.R`: 
 
 ```r
 #' @name dev.R
@@ -308,7 +308,7 @@ unloadNamespace(mypackage); remove.packages(mypackage)
 rm(list = ls()); gc()
 ```
 
-### Download Your Package
+### 2.3 Download Your Package
 
 Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demo_tool`). Then, you can use `devtools` to install your package straight from github!
 
