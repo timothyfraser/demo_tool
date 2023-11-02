@@ -49,6 +49,22 @@ Your `NAMESPACE` file is automatically generated when you `devtools::document()`
 export(get_prob)
 ```
 
+### 1.3 `.buildignore` file template
+
+Your `.buildignore` file tells the R package which files and folders to ignore when building the package. Important - the package will get confused by anything other than its core files (`DESCRIPTION`, `NAMESPACE`, `.buildignore`, `/R` folder, `/data` folder, `/man` folder). 
+
+- To say, "ignore this file", write `^filename`.
+- To say, "ignore this type of file", write `^.filetype`.
+- To say, "ignore this folder and its contents", write `^z$`.
+
+```
+^.*\.Rproj$
+^\.Rproj\.user$
+^.Renviron
+^.Rhistory
+^z$
+```
+
 ### 1.3 `function` template
 
 Your `/R` folder contains scripts, one for each function. Each script will need a a special header, called `roxygen2` commenting. Instead of `#`, we write `#'`, followed by a tag like `@name`, which carries special meaning and helps the package auto generate its own documentation. I've written up a short function called `plus_one()`, as well as a long function called `get_prob()` that you can use as templates when building your functions.
