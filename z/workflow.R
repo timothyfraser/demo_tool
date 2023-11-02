@@ -3,48 +3,25 @@
 #' @author Tim Fraser, your names here...
 #' @description Script for test workflow of `demo_tool` package functions.
 
-# Set name of package, for ease
-mypackage = "demo_tool"
-# Unload your package and uninstall it first.
-unloadNamespace(mypackage); remove.packages(mypackage)
-# Auto-document your package, turning roxygen comments into manuals in the `/man` folder
-devtools::document(".")
-# Load your package temporarily!
-devtools::load_all(".")
 
-# Test out our functions
+# Load functions straight from file
+source("R/plus_one.R")
+source("R/get_prob.R")
 
-# Add 1 to x
-demo_tool::plus_one(x = 1)
-# Add 1 to a vector of x values
-demo_tool::plus_one(x = c(1,2,3,4))
+# Or use load_all() from devtools to load them as if they were a package
+# devtools::load_all(".")
 
-# Get series system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
- 
-# Get parallel system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
-
-# Just think: you could make many functions,
-# outputting vectors, data.frames, ggplot visuals, etc.
-# So many options!
-
-# When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
-
-# Then, when ready, build and install the package!
-# For speedy build, use binary = FALSE and vignettes = FALSE
-devtools::build(".", binary = FALSE, vignettes = FALSE)
-
-# Install your package from a local build file
-install.packages("nameofyourpackagefile.tar.gz", type = "source")
-
-# Load your package!
-library("demo_tool")
+plus_one(x = 1)
+get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
 
 
-# When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
+# Test out making new functions
+plus_n = function(x, n){ x + n }
+
+plus_n(x = c(1,2,3), n = 2)
+
+# When you're happy with a function, go put it in an R script in the /R folder.
+
 
 # Always a good idea to clear your environment and cache
 rm(list = ls()); gc()
