@@ -57,6 +57,8 @@ Your `.buildignore` file tells the R package which files and folders to ignore w
 - To say, "ignore this type of file", write `^.filetype`.
 - To say, "ignore this folder and its contents", write `^z$`.
 
+Here's my template `.buildignore` file.
+
 ```
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -65,13 +67,13 @@ Your `.buildignore` file tells the R package which files and folders to ignore w
 ^z$
 ```
 
-### 1.3 `function` template
+### 1.4 `function` template
 
 Your `/R` folder contains scripts, one for each function. Each script will need a a special header, called `roxygen2` commenting. Instead of `#`, we write `#'`, followed by a tag like `@name`, which carries special meaning and helps the package auto generate its own documentation. I've written up a short function called `plus_one()`, as well as a long function called `get_prob()` that you can use as templates when building your functions.
 
 Let's look at them!
 
-#### 1.3.1 Short `function` template: `plus_one()`
+#### 1.4.1 Short `function` template: `plus_one()`
 
 ```r
 #' @name plus_one
@@ -87,7 +89,7 @@ plus_one = function(x){
 } 
 ```
 
-#### 1.3.2 Long `function` template: `get_prob()`
+#### 1.4.2 Long `function` template: `get_prob()`
 
 Here's a template for a longer, more complex function. Check out my extra commenting, which will help you edit the code to suit your needs.
 
@@ -187,7 +189,7 @@ get_prob = function(t = 100, lambdas, type = "series"){
 }
 ```
 
-## 1.4 Adding data to the package (optional)
+## 1.5 Adding data to the package (optional)
 
 If you need to add data to your package, you can put a `z/make_data.R` script in your `/z` folder (which is ignored when building the package, according to the `.buildignore` file). You would run this, saving your data as a `.rda` file in the `/data` folder. It might look like my `z/make_data.R` template below.
 
@@ -210,4 +212,113 @@ save(helper, "data/helper.rda")
 Once you have your prerequisite files, you can build your R package!
 To build an R package, you will need to install `devtools`, the package for R package development!
 
-There are 3 main steps: `document()` your functions, `build()` your package, and then install it with `install.packages("packagename.tar.gz", type = "source").
+There are 3 main steps: `document()` your functions, `build()` your package, and then install it with `install.packages("packagename.tar.gz", type = "source")`.
+
+I encourage you create 2 helper files in the `/z` folder for this purpose, and add the `/z` folder to the `.buildignore` file. These files include... 
+
+- `z/workflow.R`: a script where you design functions. A workspace.
+- `z/dev.R`: a script where you `document()` the package, test functions, `build()` the package when satisfied, and test install it.
+
+Here's examples of each.
+
+### `z/workflow.R`: 
+
+```r
+#' @name workflow.R
+#' @title Example Workflow for `demo_tool` package functions
+#' @author Tim Fraser, your names here...
+#' @description Script for test workflow of `demo_tool` package functions.
+
+
+# Load functions straight from file
+source("R/plus_one.R")
+source("R/get_prob.R")
+
+# Or use load_all() from devtools to load them as if they were a package
+# devtools::load_all(".")
+
+plus_one(x = 1)
+get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
+
+
+# Test out making new functions
+plus_n = function(x, n){ x + n }
+
+plus_n(x = c(1,2,3), n = 2)
+
+# When you're happy with a function, go put it in an R script in the /R folder.
+
+# Always a good idea to clear your environment and cache
+rm(list = ls()); gc()
+```
+
+
+### `z/dev.R`: 
+
+```r
+#' @name dev.R
+#' @title Example Development Script for building and checking `demo_tool` package functions
+#' @author Tim Fraser, your names here...
+#' @description Script for test package building of `demo_tool` package functions.
+
+# Set name of package, for ease
+mypackage = "demo_tool"
+# Unload your package and uninstall it first.
+unloadNamespace(mypackage); remove.packages(mypackage)
+# Auto-document your package, turning roxygen comments into manuals in the `/man` folder
+devtools::document(".")
+# Load your package temporarily!
+devtools::load_all(".")
+
+# Test out our functions
+
+# Add 1 to x
+demo_tool::plus_one(x = 1)
+# Add 1 to a vector of x values
+demo_tool::plus_one(x = c(1,2,3,4))
+
+# Get series system probability at each time t
+demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
+ 
+# Get parallel system probability at each time t
+demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
+
+# Just think: you could make many functions,
+# outputting vectors, data.frames, ggplot visuals, etc.
+# So many options!
+
+# When finished, remember to unload the package
+unloadNamespace(mypackage); remove.packages(mypackage)
+
+# Then, when ready, build and install the package!
+# For speedy build, use binary = FALSE and vignettes = FALSE
+devtools::build(".", binary = FALSE, vignettes = FALSE)
+
+# Install your package from a local build file
+install.packages("nameofyourpackagefile.tar.gz", type = "source")
+
+# Load your package!
+library("demo_tool")
+
+
+# When finished, remember to unload the package
+unloadNamespace(mypackage); remove.packages(mypackage)
+
+# Always a good idea to clear your environment and cache
+rm(list = ls()); gc()
+```
+
+### Download Your Package
+
+Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demo_tool`). Then, you can use `devtools` to install your package straight from github!
+
+```r
+# Install your package straight from github!
+# Try installing mine:
+devtools::install_github("timothyfraser/demo_tool")
+library(demo_tool) # load package 
+plus_one(x = 2) # test function
+
+# Now do yours!
+# devtools::install_github("yourgithubname/your_repo_name_which_should_be_the_same_as_your_package_name")
+```
