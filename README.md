@@ -4,7 +4,7 @@
 
 Want to make a small, compact R package? It's not as hard as you'd think! Here's a brief tutorial that will walk you through the process of building your first publicly available tool as an R package!
 
-## Necessary Files
+## 1. Necessary Files
 Your R package will need the following documents.
 
 - `DESCRIPTION`: the package metadata file, including eg. the package name, description, maintainers, etc. Always work from a template, because it can be persnickety.
@@ -15,7 +15,7 @@ Your R package will need the following documents.
 - `/z`: extra folder, for any other scripts or files you may need. I put scripts for building and testing the package here, as well as raw data.
 - `.buildignore`: a list of all files and folders to ignore when building the package. Eg. `/z` should go in here.
 
-### `DESCRIPTION` file template
+### 1.1 `DESCRIPTION` file template
 
 For example, [my `DESCRIPTION` file](https://github.com/timothyfraser/demo_tool/blob/main/DESCRIPTION#L1C1-L18C10) looks like this (see below)! Update the `Package:` name, `Title:`, `Authors@R:`, `Maintainer:`, and `Description:` fields. 
 ```
@@ -40,7 +40,7 @@ Imports:
 
 ```
 
-### `NAMESPACE` file template
+### 1.2 `NAMESPACE` file template
 
 Your `NAMESPACE` file is automatically generated when you `devtools::document()` the package. Don't edit it yourself. It tells the package what functions to export for use. Here's a short sample:
 ```
@@ -49,13 +49,13 @@ Your `NAMESPACE` file is automatically generated when you `devtools::document()`
 export(get_prob)
 ```
 
-### `function` template
+### 1.3 `function` template
 
 Your `/R` folder contains scripts, one for each function. Each script will need a a special header, called `roxygen2` commenting. Instead of `#`, we write `#'`, followed by a tag like `@name`, which carries special meaning and helps the package auto generate its own documentation. I've written up a short function called `plus_one()`, as well as a long function called `get_prob()` that you can use as templates when building your functions.
 
 Let's look at them!
 
-#### Short `function` template: `plus_one()`
+#### 1.3.1 Short `function` template: `plus_one()`
 
 ```r
 #' @name plus_one
@@ -71,7 +71,7 @@ plus_one = function(x){
 } 
 ```
 
-#### Long `function` template: `get_prob()`
+#### 1.3.2 Long `function` template: `get_prob()`
 
 Here's a template for a longer, more complex function. Check out my extra commenting, which will help you edit the code to suit your needs.
 
@@ -169,6 +169,24 @@ get_prob = function(t = 100, lambdas, type = "series"){
   return(stat)
  
 }
+```
+
+## 1.4 Adding data to the package (optional)
+
+If you need to add data to your package, you can put a `z/make_data.R` script in your `/z` folder (which is ignored when building the package, according to the `.buildignore` file). You would run this, saving your data as a `.rda` file in the `/data` folder. It might look like my `z/make_data.R` template below.
+
+```r
+#' @name make_data.R
+#' @description Script for data generation
+#' @note These roxygen2 comments are just for kicks. Not needed anywhere except the /R folder.
+
+# Make the data, and give it an easy to use name (that's what users will call it when coding with it)
+helper = tibble(x = 1, y = 2, z = 3)
+# Alternatively, read it in from somewhere, eg.
+# helper = readr::read_csv("z/helper.csv") # a hypothetical file
+
+# Save it as an .rda file in the `/data` folder
+save(helper, "data/helper.rda")
 ```
 
 ## `devtools`
