@@ -9,7 +9,7 @@ get_prob(t = 100, lambdas, type = "series")
 \arguments{
 \item{t}{[integer] time passed. Can be a single integer or a vector of integers.}
 
-\item{lambdas}{[vector] a vector of failure rates for components, named $\lambda$}
+\item{lambdas}{[vector] a vector of failure rates for components, named lambda}
 
 \item{type}{[character] a single value describing whether these probabilities should be combined using the rules of series or parallel systems.}
 }
@@ -29,6 +29,11 @@ This function calculates system reliability over time t given a set of lambdas s
 - `@importFrom` bundles into your package 1 or more specific functions from another package, so that your package will always function.
 
 You can specify default inputs for an input parameter like with `type = "series"` below.
+
+It's important to 'import' any extra functions your package relies on. 
+You can use `@importFrom`. For example:
+`@importFrom` packagename function1 function2
+Note: if you're importing the pipeline from `dplyr`, then you can write it like I do below, where `%>%` is wrapped in ticks, eg.``.
 }
 \examples{
 

@@ -1,7 +1,7 @@
 #' @name workflow.R
-#' @title Example Workflow for `demo_tool` package functions
+#' @title Example Workflow for `demotool` package functions
 #' @author Tim Fraser, your names here...
-#' @description Script for test workflow of `demo_tool` package functions.
+#' @description Script for test workflow of `demotool` package functions.
 
 
 # Load functions straight from file

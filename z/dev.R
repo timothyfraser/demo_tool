@@ -1,12 +1,10 @@
 #' @name dev.R
-#' @title Example Development Script for building and checking `demo_tool` package functions
+#' @title Example Development Script for building and checking `demotool` package functions
 #' @author Tim Fraser, your names here...
-#' @description Script for test package building of `demo_tool` package functions.
+#' @description Script for test package building of `demotool` package functions.
 
-# Set name of package, for ease
-mypackage = "demo_tool"
 # Unload your package and uninstall it first.
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 # Auto-document your package, turning roxygen comments into manuals in the `/man` folder
 devtools::document(".")
 # Load your package temporarily!
@@ -15,36 +13,42 @@ devtools::load_all(".")
 # Test out our functions
 
 # Add 1 to x
-demo_tool::plus_one(x = 1)
+demotool::plus_one(x = 1)
 # Add 1 to a vector of x values
-demo_tool::plus_one(x = c(1,2,3,4))
+demotool::plus_one(x = c(1,2,3,4))
 
 # Get series system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
+demotool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
  
 # Get parallel system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
+demotool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
 
 # Just think: you could make many functions,
 # outputting vectors, data.frames, ggplot visuals, etc.
 # So many options!
 
 # When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 
-# Then, when ready, build and install the package!
+# Then, when ready, document, unload, build, and install the package!
 # For speedy build, use binary = FALSE and vignettes = FALSE
-devtools::build(".", binary = FALSE, vignettes = FALSE)
+devtools::document(".");
+unloadNamespace("demotool");
+devtools::build(pkg = ".", path = getwd(), binary = FALSE, vignettes = FALSE)
+
 
 # Install your package from a local build file
-install.packages("nameofyourpackagefile.tar.gz", type = "source")
+# such as 
+# install.packages("nameofyourpackagefile.tar.gz", type = "source")
+# or in our case:
+install.packages("demotool_0.1.0.tar.gz", type = "source")
 
 # Load your package!
-library("demo_tool")
+library("demotool")
 
 
 # When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 
 # Always a good idea to clear your environment and cache
 rm(list = ls()); gc()

@@ -1,11 +1,14 @@
-Package: demo_tool
-Type: Package
-Title: Demo package for making a publicly available tool as an R package.
+Package: demotool
 Version: 0.1.0
-Authors@R: 
-  person("Fraser", "Timothy", , "tmf77@cornell.edu", role = c("aut", "cre"),
-  comment = c(ORCID = "0000-0002-4509-0244"))
-  person("First Name", "Last Name", , "myemail@cornell.edu", role = c("aut"))
+Date: 2023-11-01
+Title: Demo package for Publicly Available R Package Tool
+Authors@R: c(
+  person("Fraser", "Timothy", email = "tmf77@cornell.edu", role = c("aut", "cre")),
+  person("Julia", "Fakeperson", email = "myemail@cornell.edu", role = "aut"),
+  person("Javier", "Fakeperson", email = "myemail2@cornell.edu", role = "ctb") )
+Author: Timothy Fraser [aut, cre],
+  Julia Fakeperson [aut],
+  Javier Fakeperson [ctb]
 Maintainer: Timothy Fraser <tmf77@cornell.edu>
 Description: One-line description for package goes here. Make sure this script ends with an extra blank line after `Imports:`
 License: MIT + file LICENSE
@@ -13,6 +16,4 @@ Encoding: UTF-8
 LazyData: true
 Rxoygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 3.5.0)
-Imports: 
+Depends: R (>= 3.5.0)

@@ -14,7 +14,7 @@
 #' - `@export` exports your function to be available to a user of your package. (Eg. not an internal function)
 #' - `@importFrom` bundles into your package 1 or more specific functions from another package, so that your package will always function.
 #' @param t [integer] time passed. Can be a single integer or a vector of integers.
-#' @param lambdas [vector] a vector of failure rates for components, named $\lambda$
+#' @param lambdas [vector] a vector of failure rates for components, named lambda
 #' @param type [character] a single value describing whether these probabilities should be combined using the rules of series or parallel systems.
 #'
 #' @note You can specify default inputs for an input parameter like with `type = "series"` below.
@@ -25,6 +25,11 @@
 #' 
 #' # Get parallel system probability at each time t
 #' get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
+#' 
+#' @note It's important to 'import' any extra functions your package relies on. 
+#' You can use `@importFrom`. For example:
+#' `@importFrom` packagename function1 function2
+#' Note: if you're importing the pipeline from `dplyr`, then you can write it like I do below, where `%>%` is wrapped in ticks, eg.``.
 #' 
 #' @importFrom tidyr expand_grid
 #' @importFrom dplyr `%>%` mutate summarize group_by

@@ -2,6 +2,8 @@
 #' @description Script for data generation
 #' @note These roxygen2 comments are just for kicks. Not needed anywhere except the /R folder.
 
+library(dplyr)
+
 # Make a data folder in your package directory.
 dir.create("data")
 
@@ -11,4 +13,12 @@ helper = tibble(x = 1, y = 2, z = 3)
 # helper = readr::read_csv("z/helper.csv") # a hypothetical file
 
 # Save it as an .rda file in the `/data` folder
-save(helper, "data/helper.rda")
+save(helper, file = "data/helper.rda")
+
+# Test it
+remove(helper);
+load("data/helper.rda")
+helper
+
+# Remove all
+rm(list = ls())

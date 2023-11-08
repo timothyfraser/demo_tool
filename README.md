@@ -1,4 +1,4 @@
-# demo_tool
+# demotool
 - **Description**: Repository for demoing how to make a usable tool in an R package
 - **Author**: Tim Fraser, PhD
 
@@ -17,16 +17,19 @@ Your R package will need the following documents.
 
 ### 1.1 `DESCRIPTION` file template
 
-For example, [my `DESCRIPTION` file](https://github.com/timothyfraser/demo_tool/blob/main/DESCRIPTION#L1C1-L18C10) looks like this (see below)! Update the `Package:` name, `Title:`, `Authors@R:`, `Maintainer:`, and `Description:` fields. 
+For example, [my `DESCRIPTION` file](https://github.com/timothyfraser/demotool/blob/main/DESCRIPTION#L1C1-L18C10) looks like this (see below)! Update the `Package:` name, `Title:`, `Authors@R:`, `Maintainer:`, and `Description:` fields. 
 ```
-Package: demo_tool
-Type: Package
-Title: Demo package for making a publicly available tool as an R package.
+Package: demotool
 Version: 0.1.0
-Authors@R: 
-  person("Fraser", "Timothy", , "tmf77@cornell.edu", role = c("aut", "cre"),
-  comment = c(ORCID = "0000-0002-4509-0244"))
-  person("First Name", "Last Name", , "myemail@cornell.edu", role = c("aut"))
+Date: 2023-11-01
+Title: Demo package for Publicly Available R Package Tool
+Authors@R: c(
+  person("Fraser", "Timothy", email = "tmf77@cornell.edu", role = c("aut", "cre")),
+  person("Julia", "Fakeperson", email = "myemail@cornell.edu", role = "aut"),
+  person("Javier", "Fakeperson", email = "myemail2@cornell.edu", role = "ctb") )
+Author: Timothy Fraser [aut, cre],
+  Julia Fakeperson [aut],
+  Javier Fakeperson [ctb]
 Maintainer: Timothy Fraser <tmf77@cornell.edu>
 Description: One-line description for package goes here. Make sure this script ends with an extra blank line after `Imports:`
 License: MIT + file LICENSE
@@ -34,9 +37,7 @@ Encoding: UTF-8
 LazyData: true
 Rxoygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 3.5.0)
-Imports: 
+Depends: R (>= 3.5.0)
 
 ```
 
@@ -225,9 +226,9 @@ Here's examples of each.
 
 ```r
 #' @name workflow.R
-#' @title Example Workflow for `demo_tool` package functions
+#' @title Example Workflow for `demotool` package functions
 #' @author Tim Fraser, your names here...
-#' @description Script for test workflow of `demo_tool` package functions.
+#' @description Script for test workflow of `demotool` package functions.
 
 
 # Load functions straight from file
@@ -256,15 +257,8 @@ rm(list = ls()); gc()
 ### 2.2 `z/dev.R`: 
 
 ```r
-#' @name dev.R
-#' @title Example Development Script for building and checking `demo_tool` package functions
-#' @author Tim Fraser, your names here...
-#' @description Script for test package building of `demo_tool` package functions.
-
-# Set name of package, for ease
-mypackage = "demo_tool"
 # Unload your package and uninstall it first.
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 # Auto-document your package, turning roxygen comments into manuals in the `/man` folder
 devtools::document(".")
 # Load your package temporarily!
@@ -273,36 +267,42 @@ devtools::load_all(".")
 # Test out our functions
 
 # Add 1 to x
-demo_tool::plus_one(x = 1)
+demotool::plus_one(x = 1)
 # Add 1 to a vector of x values
-demo_tool::plus_one(x = c(1,2,3,4))
+demotool::plus_one(x = c(1,2,3,4))
 
 # Get series system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
+demotool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "series")
  
 # Get parallel system probability at each time t
-demo_tool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
+demotool::get_prob(t = c(2,4,5,6), lambdas = c(0.001, 0.02), type = "parallel")
 
 # Just think: you could make many functions,
 # outputting vectors, data.frames, ggplot visuals, etc.
 # So many options!
 
 # When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 
-# Then, when ready, build and install the package!
+# Then, when ready, document, unload, build, and install the package!
 # For speedy build, use binary = FALSE and vignettes = FALSE
-devtools::build(".", binary = FALSE, vignettes = FALSE)
+devtools::document(".");
+unloadNamespace("demotool");
+devtools::build(pkg = ".", path = getwd(), binary = FALSE, vignettes = FALSE)
+
 
 # Install your package from a local build file
-install.packages("nameofyourpackagefile.tar.gz", type = "source")
+# such as 
+# install.packages("nameofyourpackagefile.tar.gz", type = "source")
+# or in our case:
+install.packages("demotool_0.1.0.tar.gz", type = "source")
 
 # Load your package!
-library("demo_tool")
+library("demotool")
 
 
 # When finished, remember to unload the package
-unloadNamespace(mypackage); remove.packages(mypackage)
+unloadNamespace("demotool"); remove.packages("demotool")
 
 # Always a good idea to clear your environment and cache
 rm(list = ls()); gc()
@@ -310,13 +310,13 @@ rm(list = ls()); gc()
 
 ### 2.3 Download Your Package
 
-Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demo_tool`). Then, you can use `devtools` to install your package straight from github!
+Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demotool`). Then, you can use `devtools` to install your package straight from github!
 
 ```r
 # Install your package straight from github!
 # Try installing mine:
-devtools::install_github("timothyfraser/demo_tool")
-library(demo_tool) # load package 
+devtools::install_github("timothyfraser/demotool")
+library(demotool) # load package 
 plus_one(x = 2) # test function
 
 # Now do yours!
