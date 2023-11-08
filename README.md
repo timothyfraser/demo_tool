@@ -310,9 +310,15 @@ rm(list = ls()); gc()
 
 ### 2.3 Download Your Package
 
-Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demotool`). Then, you can use `devtools` to install your package straight from github!
+Finally, once happy with your package, put the whole thing in a **public** github repository (be sure to commit and push it). That repository's name must match the package name exactly, just like this one (`demotool`). Then, you can use `devtools` to install your package straight from github! Here's our `z/install_from_github.R` helper script:
 
 ```r
+#' @name install_from_github.R
+#' @title Download Package from Github!
+#' @author Tim Fraser
+#' @description This script shows you how to install your package straight from a public github repository!
+#' Note that for your own package, you'll need to put your finalized package on github first.
+
 # Install your package straight from github!
 # Try installing mine:
 devtools::install_github("timothyfraser/demotool")
